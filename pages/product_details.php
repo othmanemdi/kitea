@@ -4,7 +4,12 @@ ob_start();
 // php
 $title = "Product Details";
 
-$products = glob('images/products/*.jpg');
+$id = (int)$_GET['id'];
+
+$product = $pdo->query("SELECT * FROM produits WHERE id = $id LIMIT 1")->fetch();
+
+
+// $products = glob('images/products/*.jpg');
 
 $content_php = ob_get_clean();
 
@@ -51,13 +56,13 @@ ob_start(); ?>
         <!-- <img src="images/1.jpg" alt="" height="500"> -->
 
         <div class="img-zoom-container">
-            <img id="myimage" onmouseover="get_result()" onMouseOut="hide_result()" src="images/products/_1_0_10000452246-1k.jpg" alt="">
+            <img id="myimage" onmouseover="get_result()" onMouseOut="hide_result()" src="images/products_categories/<?= $product->img ?>" alt="" width="500">
             <div id="myresult" class="img-zoom-result"></div>
         </div>
     </div>
 
     <div class="col">
-        <h3>Product 1</h3>
+        <h3><?= $product->nom ?></h3>
         <div class="text-warning">
             <i class="fas fa-star"></i>
             <i class="fas fa-star"></i>
@@ -96,8 +101,8 @@ ob_start(); ?>
 
 
         <div class="h3 mb-3">
-            <b>$50.00</b>
-            <del class="text-danger">$75.00</del>
+            <b>$<?= $product->prix ?></b>
+            <del class="text-danger">$<?= $product->ancien_prix ?></del>
         </div>
 
         <a href="cart" class="btn bg-kitea text-white">

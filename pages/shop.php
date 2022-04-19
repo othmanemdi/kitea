@@ -4,34 +4,11 @@ ob_start();
 // php
 $title = "Shop";
 
-
-
-
 $products = $pdo->query("SELECT * FROM produits")->fetchAll();
 
-echo "<pre>";
-print_r($products);
-echo "</pre>";
-die();
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-$products = glob('images/products/*.jpg');
+// $products = glob('images/products/*.jpg');
 
 $couleurs = [];
 $couleurs[] = "Gray";
@@ -59,7 +36,7 @@ ob_start(); ?>
 
 <div class="row">
     <div class="col-lg-3 col-md-4">
-        <div class="sticky-sm-topa">
+        <div class="sticky-sm-top">
 
             <div class="accordion" id="accordionExample">
                 <div class="accordion-item mb-0 border-0 ronded mb-3">
@@ -221,20 +198,21 @@ ob_start(); ?>
     <div class="col-lg-9 col-md-8">
 
         <div class="row">
-            <?php foreach ($products as $key => $c) : ?>
+            <?php foreach ($products as $key => $p) : ?>
 
                 <div class="col-lg-4 col-md-6 col-sm-12">
 
                     <div class="card mb-3">
-                        <a href="product_details&id=<?= $key ?>">
+                        <a href="product_details&id=<?= $p->id ?>">
 
-                            <img src="<?= $c ?>" class="card-img-top" height="350" alt="Test Image">
+                            <img src="images/products_categories/<?= $p->img ?>" class="card-img-top" height="350" alt="Test Image">
                         </a>
 
                         <div class="card-body">
 
-                            <h4>Product <?= $key + 1 ?></h4>
-
+                            <h4><?= $p->nom ?></h4>
+                            <span class="fw-bold me-2">$<?= $p->prix ?></span>
+                            <small> <del class="text-danger">$<?= $p->ancien_prix ?></del></small>
                             <a href="cart" class="btn btn-dark">Add to cart</a>
 
                         </div>
