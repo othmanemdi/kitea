@@ -1,5 +1,6 @@
 <?php
 
+
 ob_start();
 // php
 $title = "Product Details";
@@ -12,7 +13,17 @@ $product = $pdo->query("SELECT * FROM produits WHERE id = $id LIMIT 1")->fetch()
 // $products = glob('images/products/*.jpg');
 
 $content_php = ob_get_clean();
+ob_start();
+?>
 
+<meta property="og:title" content="<?= $product->nom ?>">
+<meta property="og:description" content="Simple, beautiful database diagram editor for developers to create, collaborate and visualize their entity relationship diagrams.">
+<meta property="og:image" content="images/products_categories/<?= $product->img ?>">
+<meta property="og:url" content="https://drawsql.app">
+<meta property="og:site_name" content="DrawSQL">
+
+<?php
+$content_seo = ob_get_clean();
 
 ob_start(); ?>
 

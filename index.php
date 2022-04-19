@@ -29,6 +29,8 @@ echo $content_php ?? "";
 <html lang="en">
 
 <head>
+    <?= $content_seo ?? ""; ?>
+
     <?php require_once "pages/body/head.php" ?>
 
     <?= $content_css ?? ""; ?>
