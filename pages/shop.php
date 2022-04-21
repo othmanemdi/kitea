@@ -4,7 +4,7 @@ ob_start();
 // php
 $title = "Shop";
 
-$products = $pdo->query("SELECT * FROM produits")->fetchAll();
+$products = $pdo->query("SELECT * FROM produits ORDER BY id DESC")->fetchAll();
 
 
 
@@ -210,7 +210,7 @@ ob_start(); ?>
 
                         <div class="card-body">
 
-                            <h4><?= $p->nom ?></h4>
+                            <h4><?= $p->nom ?> <?= $p->id ?></h4>
                             <span class="fw-bold me-2">$<?= $p->prix ?></span>
                             <small> <del class="text-danger">$<?= $p->ancien_prix ?></del></small>
                             <a href="cart" class="btn btn-dark">Add to cart</a>

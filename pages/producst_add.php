@@ -7,6 +7,48 @@ $title = "Add New Product";
 $content_php = ob_get_clean();
 
 
+if (isset($_POST['ajt_produit'])) {
+
+    $nom_image = $_POST['nom'];
+    $prix_image = $_POST['prix'];
+    $ancien_prix_image = $_POST['ancien_prix'];
+    $couleur_image = $_POST['couleur'];
+    $categorie_image = $_POST['categorie'];
+    $name_image = $_FILES["img"]["name"];
+  
+    $target_dir = "images/products_categories/";
+    $target_file = $target_dir . basename($_FILES["img"]["name"]);
+    move_uploaded_file($_FILES["img"]["tmp_name"], $target_file);
+
+
+    // $pdo->
+
+    // INSERT INTO produits (id, nom, prix, ancien_prix, couleur, categorie, img) VALUES (NULL, 'test', '123', '1234', 'test', 'test', '1.jpg');
+
+        $produit = $pdo->prepare("INSERT INTO produits SET 
+            nom = :nom_image ,
+            prix = :prix_image,
+            ancien_prix = :ancien_prix_image,
+            couleur = :couleur_image,
+            categorie = :categorie_image,
+            img = :name_image
+    ");
+
+        $produit->execute(
+            [
+                'nom_image' => $nom_image,
+                'prix_image' => $prix_image,
+                'ancien_prix_image' => $ancien_prix_image,
+                'couleur_image' => $couleur_image,
+                'categorie_image' => $categorie_image,
+                'name_image' => $name_image
+            ]
+        );
+
+        header('Location: shop');
+        die();
+}
+
 ob_start(); ?>
 
 <h1>Add New Product</h1>
@@ -18,7 +60,7 @@ ob_start(); ?>
 
             <h3 class="text-center">Informations de produit</h3>
 
-            <form method="post" autocomplete="off">
+            <form method="post" autocomplete="off" enctype="multipart/form-data">
                 <div class="form-group mb-3">
                     <label class="form-label" for="nom">Nom de produit:</label>
 
@@ -35,7 +77,7 @@ ob_start(); ?>
                 <div class="form-group mb-3">
                     <label class="form-label" for="ancien_prix">Ancien Prix:</label>
 
-                    <input name="ancien_prix" type="text" class="form-control" id="ancien_prix" name="ancien_prix" placeholder="Veuillez entrer l'ancien prix SVP !">
+                    <input name="ancien_prix" type="text" class="form-control" id="ancien_prix" placeholder="Veuillez entrer l'ancien prix SVP !">
 
                 </div>
 
@@ -57,6 +99,7 @@ ob_start(); ?>
                         <option value="Rangement">Rangement</option>
                         <option value="Chaises">Chaises</option>
                         <option value="Tables à manger">Tables à manger</option>
+                        <option value="Canapé">Canapé</option>
                     </select>
 
                 </div>
@@ -68,7 +111,12 @@ ob_start(); ?>
                     <input name="img" type="file" class="form-control" id="img">
                 </div>
 
+
+
                 <button type="submit" name="ajt_produit" class="btn bg-kitea text-white">Ajouter</button>
+
+
+
                 <button class="btn btn-secondary">Retour</button>
             </form>
         </div>
